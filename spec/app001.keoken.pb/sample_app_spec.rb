@@ -5,6 +5,8 @@ describe group('appuser') do
   it { should have_gid 1000 }
 end
 
+
+
 describe user('appuser') do
   it { should exist }
   it { should have_uid 1000 }
