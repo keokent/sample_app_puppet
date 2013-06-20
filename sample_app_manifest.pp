@@ -30,3 +30,22 @@ group { 'appuser':
   ensure => present,
   gid => 1000,
 }
+
+service { 'nginx':
+  enable => true,
+  ensure => running,
+  hasrestart => true,
+  require =>Package['nginx'],
+}
+
+file { '/etc/my.conf':
+     content => "character-set-server = utf8",
+}
+
+service { 'mysqld':
+  enable => true,
+  ensure => running,
+  hasrestart => true,
+  require => Package['mysql-server'],
+}
+
