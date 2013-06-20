@@ -1,14 +1,52 @@
-yumrepo { 'nginx':
-  describe => 'nginx yum repository',
-  baseurl => 'http://nginx.org/packages/centos/6/$basearch/',
-  enabled => 1,
-  gpgcheck => 0,
-}
-
-package { 'nginx':
+package { 
+  [
+    'zsh',
+    'emacs',
+    'nginx',
+    'mysql-server',
+    'mysql-devel',
+    'gcc',
+    'gcc-c++',
+    'make',
+    'openssl',
+    'openssl-devel',
+    'libxml2-devel',
+    'libxslt-devel',
+  ]:
   ensure => installed,
-  require => Yumrepo['nginx'],
 }
 
-$port = 80
+user { 'appuser':
+  ensure => present,
+  uid => 1000,
+  gid => appuser,
+  comment => 'appuser',
+  home => '/home/appuser',
+  managehome => ture,
+  shell => '/bin/bash'
+}
+
+group { 'appuser':
+  ensure => present,
+  gid => 1000,
+}
+
+service { 'nginx':
+  enable => true,
+  ensure => running,
+  hasrestart => true,
+  require =>Package['nginx'],
+}
+
+file { '/etc/my.conf':
+     content => "character-set-server = utf8",
+}
+
+service { 'mysqld':
+  enable => true,
+  ensure => running,
+  hasrestart => true,
+  require => Package['mysql-server'],
+}
+
 
