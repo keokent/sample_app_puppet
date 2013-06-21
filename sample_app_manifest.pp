@@ -38,8 +38,17 @@ service { 'nginx':
   require =>Package['nginx'],
 }
 
+file { '/etc/nginx/nginx.conf':
+  owner => 'root',
+  group => 'root',
+  mode => '0644',
+  content => template('nginx.conf'),
+  require => Package['nginx'],
+  notify => Service['nginx'],
+}
+
 file { '/etc/my.conf':
-     content => "character-set-server = utf8",
+  content => "character-set-server = utf8",
 }
 
 service { 'mysqld':
@@ -48,4 +57,3 @@ service { 'mysqld':
   hasrestart => true,
   require => Package['mysql-server'],
 }
-
