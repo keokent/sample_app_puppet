@@ -5,8 +5,6 @@ describe group('appuser') do
   it { should have_gid 1000 }
 end
 
-
-
 describe user('appuser') do
   it { should exist }
   it { should have_uid 1000 }
@@ -49,4 +47,10 @@ end
 describe port(3306) do
   it { should be_listening }
 end
+
+describe file('/usr/local/rbenv/versions/2.0.0-p195/bin') do
+  it { should be_directory }
+end
+
+
 
