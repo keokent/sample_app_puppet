@@ -20,11 +20,12 @@ package {
 user { 'appuser':
   ensure => present,
   uid => 1000,
-  gid => appuser,
+  gid => 'appuser',
   comment => 'appuser',
   home => '/home/appuser',
-  managehome => ture,
-  shell => '/bin/bash'
+  managehome => true,
+  shell => '/bin/bash',
+  require =>Group['appuser'],
 }
 
 group { 'appuser':
@@ -60,7 +61,7 @@ service { 'mysqld':
 }
 
 Exec { 
-  path => '/usr/bin:/bin:/usr/local/bin',
+  path => '/usr/bin:/bin:/usr/local/bin:/usr/local/rbenv/bin',
 }
 
 exec { 'rbenv':
@@ -79,11 +80,6 @@ exec { 'path-rbenv':
   require => Exec['rbenv'],
 }
 
-#exec { 'use-rbenv-command':
-#  command => 'sh -c "source /etc/profile.d/rbenv.sh"',
-#  require => Exec['path-rbenv'],
-#}
-
 exec { 'ruby-build':
   cwd => '/usr/local/rbenv/plugins',
   user => 'root',
@@ -92,33 +88,26 @@ exec { 'ruby-build':
   require => Exec['rbenv'],
 }
 
-exec { 'ruby-2.0.0p195-make-directory':
-  cwd => '/usr/local/rbenv',
-  user => 'root',
-  command => 'mkdir -p /usr/local/rbenv/versions/2.0.0-p195',
-  creates => '/usr/local/rbenv/versions/2.0.0-p195',
-  require => Exec[rbenv],
-}
-
 exec { 'ruby2.0.0p195-install':
-  cwd => '/usr/local/rbenv/versions/2.0.0-p195',
   user => 'root',
   command => 'ruby-build 2.0.0-p195 /usr/local/rbenv/versions/2.0.0-p195',
   creates => '/usr/local/rbenv/versions/2.0.0-p195/bin',
   timeout => 0,
-  require => Exec['ruby-2.0.0p195-make-directory'],
+  require => Exec['ruby-build'],
+}
+
+exec { 'bundler-insatll':
+  command => "sh -c 'source /etc/profile.d/rbenv.sh;gem install bundler;rbenv rehash'",
+  require => Exec['ruby2.0.0p195-install'],
 }
 
 exec { 'use-ruby2.0.0p195':
   command => 'echo "2.0.0-p195" > /usr/local/rbenv/version',
-#  command => 'sh -c "source /etc/profile.d/rbenv.sh;rbenv global 2.0.0-p195"',
   require => Exec['ruby2.0.0p195-install'],
 }
 
 exec { 'mysql-create-user':
- command => 'mysql -u root -e "GRANT ALL PRIVILEGES ON *.* TO keoken@localhost IDENTIFIED BY \'passwd\'"',
- unless => 'mysql -u root -e "select User , Host from mysql.user where User = \'keoken\' and Host = \'localhost\'"',
+  command => 'mysql -u root -e "GRANT ALL PRIVILEGES ON *.* TO keoken@localhost IDENTIFIED BY \'passwd\'"',
+  unless => 'mysql -u root -e "select User , Host from mysql.user where User = \'keoken\' and Host = \'localhost\'"',
 }
-
-
 
