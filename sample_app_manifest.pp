@@ -13,6 +13,7 @@ package {
     'libxml2-devel',
     'libxslt-devel',
     'git',
+    'monit',
   ]:
   ensure => installed,
 }
@@ -109,5 +110,37 @@ exec { 'use-ruby2.0.0p195':
 exec { 'mysql-create-user':
   command => 'mysql -u root -e "GRANT ALL PRIVILEGES ON *.* TO keoken@localhost IDENTIFIED BY \'passwd\'"',
   unless => 'mysql -u root -e "select User , Host from mysql.user where User = \'keoken\' and Host = \'localhost\'"',
+}
+
+file { '/etc/monit.conf':
+  owner => 'root',
+  group => 'root',
+  mode => '0700',
+  content => template('monit.conf'),
+  require => Package['monit'],
+  notify => Service['monit'],
+}
+
+file { '/etc/monit.d/unicorn.conf':
+  owner => 'root',
+  group => 'root',
+  mode => '0644',
+  content => template('unicorn.conf'),
+  require => Package['monit'],
+  notify => Service['monit'],
+}
+
+file { '/etc/init.d/unicorn_sample_app':
+  owner => 'root',
+  group => 'root',
+  mode => '0755',
+  content => template('unicorn_sample_app'),
+}
+
+service { 'monit':
+  enable => true,
+  ensure => running,
+  hasrestart => true,
+  require => Package['monit'],
 }
 
