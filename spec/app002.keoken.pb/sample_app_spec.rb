@@ -12,6 +12,10 @@ describe user('appuser') do
   it { should have_home_directory '/home/appuser' }
 end
 
+describe file('/home/appuser') do
+  it { should be_mode 755 }
+end
+
 describe file('/home/appuser/sample_app/tmp/sockets/.unicorn.sock') do
   it { should be_socket }
 end
@@ -51,6 +55,7 @@ end
 describe file('/usr/local/rbenv/versions/2.0.0-p195/bin') do
   it { should be_directory }
 end
+
 
 
 
