@@ -5,10 +5,10 @@ set -e
 
 # Feel free to change any of the following variables for your app:                                                                                                                                       
 TIMEOUT=${TIMEOUT-60}
-APP_ROOT=/home/appuser/sample_app
-PID=$APP_ROOT/config/shared/pids/unicorn.pid
+APP_ROOT=/home/appuser/rails
+PID=$APP_ROOT/shared/pids/unicorn.pid
 ENVIRONMENT=production
-CMD="cd $APP_ROOT; bundle exec unicorn -E $ENVIRONMENT -D -c $APP_ROOT/config/unicorn.rb"
+CMD="cd $APP_ROOT; bundle exec unicorn -E $ENVIRONMENT -D -c $APP_ROOT/current/config/unicorn.rb"
 action="$1"
 USER="appuser"
 set -u
@@ -26,7 +26,7 @@ oldsig () {
 }
  
 workersig () {
-  workerpid="$APP_ROOT/tmp/pids/unicorn.$2.pid"
+  workerpid="$APP_ROOT/shared/pids/unicorn.$2.pid"
   test -s "$workerpid" && kill -$1 `cat $workerpid`
 }
  
