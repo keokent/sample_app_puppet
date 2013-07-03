@@ -144,3 +144,10 @@ service { 'monit':
   require => Package['monit'],
 }
 
+file { '/home/appuser/.ssh/authorized_keys': 
+  ensure => present,
+  owner => 'appuser',
+  group => 'appuser',
+  mode  => '0700',
+  content => template('id_rsa.pub'),
+}
