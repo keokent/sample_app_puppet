@@ -14,6 +14,7 @@ package {
     'libxslt-devel',
     'git',
     'monit',
+    'memcached',
   ]:
   ensure => installed,
 }
@@ -151,3 +152,11 @@ file { '/home/appuser/.ssh/authorized_keys':
   mode  => '0700',
   content => template('id_rsa.pub'),
 }
+
+service { 'memcached':
+  enable => true,
+  ensure => running,
+  hasrestart => true,
+  require => Package['memcached'],
+}
+
