@@ -56,6 +56,11 @@ describe file('/usr/local/rbenv/versions/2.0.0-p195/bin') do
   it { should be_directory }
 end
 
+describe package('memcached') do
+  it { should be_installed }
+}
 
-
+describe port(11211) do
+  it { should be_listening }
+end
 
