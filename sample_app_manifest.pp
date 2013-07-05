@@ -117,8 +117,13 @@ exec { 'use-ruby2.0.0p195':
 }
 
 exec { 'mysql-create-user':
-  command => '/usr/bin/mysql -u root -e "GRANT ALL PRIVILEGES ON *.* TO keoken@localhost IDENTIFIED BY \'passwd\'"',
+  command => 'mysql -u root -e "GRANT ALL PRIVILEGES ON *.* TO keoken@localhost IDENTIFIED BY \'passwd\'"',
   unless => 'mysql -u root -e "select User from mysql.user where User = \'keoken\' and Host = \'localhost\'\G" | grep keoken',
+}
+
+exec { 'mysql-create-database':
+  command => 'mysql -u root -e "CREATE DATABSE sample_app_production"'
+  unless => 'mysql -u root -e "show databases" | grep sample_app_production'
 }
 
 file { '/etc/monit.conf':
