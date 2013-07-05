@@ -146,7 +146,7 @@ service { 'monit':
 }
 
 file { '/home/appuser/.ssh':
-  ensuer => directory,
+  ensure => directory,
   owner => 'appuser',
   group => 'appuser',
   mode => '7000',
