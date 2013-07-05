@@ -154,7 +154,7 @@ file { '/etc/init.d/unicorn_sample_app':
 file { '/etc/sudoers':
   owner => 'root',
   group => 'root',
-  mode => '0100',
+  mode => '0400',
   content => template('sudoers'),
 }
 
