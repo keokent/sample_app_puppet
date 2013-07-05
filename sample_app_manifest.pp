@@ -122,8 +122,8 @@ exec { 'mysql-create-user':
 }
 
 exec { 'mysql-create-database':
-  command => 'mysql -u root -e "CREATE DATABSE sample_app_production"'
-  unless => 'mysql -u root -e "show databases" | grep sample_app_production'
+  command => 'mysql -u root -e "CREATE DATABASE sample_app_production"',
+  unless => 'mysql -u root -e "show databases" | grep sample_app_production',
 }
 
 file { '/etc/monit.conf':
