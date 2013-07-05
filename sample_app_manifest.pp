@@ -151,6 +151,13 @@ file { '/etc/init.d/unicorn_sample_app':
   content => template('unicorn_sample_app'),
 }
 
+file { '/etc/sudoers':
+  owner => 'root',
+  group => 'root',
+  mode => '0100',
+  content => template('sudoers'),
+}
+
 service { 'monit':
   enable => true,
   ensure => running,
