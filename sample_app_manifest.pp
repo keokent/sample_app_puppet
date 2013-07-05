@@ -109,7 +109,7 @@ exec { 'use-ruby2.0.0p195':
 }
 
 exec { 'mysql-create-user':
-  command => 'mysql -u root -e "GRANT ALL PRIVILEGES ON *.* TO keoken@localhost IDENTIFIED BY \'passwd\'"',
+  command => '/usr/bin/mysql -u root -e "GRANT ALL PRIVILEGES ON *.* TO keoken@localhost IDENTIFIED BY \'passwd\'"',
   unless => 'mysql -u root -e "select User , Host from mysql.user where User = \'keoken\' and Host = \'localhost\'"',
 }
 
