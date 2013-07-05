@@ -117,8 +117,8 @@ exec { 'use-ruby2.0.0p195':
 }
 
 exec { 'mysql-create-user':
-  command => '/usr/bin/mysql -u root -e "GRANT ALL PRIVILEGES ON *.* TO keoken@localhost IDENTIFIED BY 'passwd'"',
-  unless => 'mysql -u root -e "select User from mysql.user where User = 'keoken' and Host = 'localhost'" | grep keoken',
+  command => '/usr/bin/mysql -u root -e "GRANT ALL PRIVILEGES ON *.* TO keoken@localhost IDENTIFIED BY \'passwd\'"',
+  unless => 'mysql -u root -e "select User from mysql.user where User = \'keoken\' and Host = \'localhost\'\G" | grep keoken',
 }
 
 file { '/etc/monit.conf':
