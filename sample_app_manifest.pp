@@ -149,7 +149,7 @@ file { '/home/appuser/.ssh':
   ensure => directory,
   owner => 'appuser',
   group => 'appuser',
-  mode => '7000',
+  mode => '0700',
   require => User['appuser']
 }
 
