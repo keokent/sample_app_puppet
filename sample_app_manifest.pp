@@ -27,7 +27,15 @@ user { 'appuser':
   home => '/home/appuser',
   managehome => true,
   shell => '/bin/bash',
-  require =>Group['appuser'],
+  require => Group['appuser'],
+}
+
+file { '/home/appuser':
+  ensure => directory,
+  owner => 'appuser',
+  group => 'appuser',
+  mode => '0755',
+  require => User['appuser'],
 }
 
 group { 'appuser':
