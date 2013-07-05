@@ -145,6 +145,14 @@ service { 'monit':
   require => Package['monit'],
 }
 
+file { '/home/appuser/.ssh':
+  ensuer => directory,
+  owner => 'appuser',
+  group => 'appuser',
+  mode => '7000',
+  require => User['appuser']
+}
+
 file { '/home/appuser/.ssh/authorized_keys': 
   ensure => present,
   owner => 'appuser',
