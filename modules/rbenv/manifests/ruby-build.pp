@@ -1,4 +1,8 @@
-class ruby-build::rbenv {
+class rbenv::ruby-build {
+  Exec { 
+    path => '/usr/bin:/bin:/usr/local/bin:/usr/local/rbenv/bin',
+  }
+
   exec { 'path-rbenv':
     command => "echo 'export RBENV_ROOT=\"/usr/local/rbenv\"' >> /etc/profile.d/rbenv.sh;
     	        echo 'export PATH=\"/usr/local/rbenv/bin:\$PATH\"' >> /etc/profile.d/rbenv.sh;
@@ -11,6 +15,7 @@ class ruby-build::rbenv {
     user => 'root',
     command => 'git clone git://github.com/sstephenson/ruby-build.git;cd ruby-build;./install.sh;chgrp -R appuser ruby-build;chmod -R g+rwxs ruby-build',
     creates => '/usr/local/rbenv/plugins/ruby-build',
+    require => Exec['path-rbenv'],
   }
 
   exec { 'ruby2.0.0p195-install':

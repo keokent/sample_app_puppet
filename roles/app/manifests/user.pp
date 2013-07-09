@@ -27,7 +27,7 @@ class app::user {
     owner => 'root',
     group => 'root',
     mode => '0440',
-    content => template('/app/sudoers'),
+    content => template('app/sudoers'),
   }
 
   file { '/home/appuser/.ssh':

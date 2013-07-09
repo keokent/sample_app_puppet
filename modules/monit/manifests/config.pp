@@ -3,13 +3,13 @@ class monit::config {
     owner => 'root',
     group => 'root',
     mode => '0700',
-    content => template('monit.conf'),
+    content => template('monit/monit.conf'),
   }
 
   file { '/etc/monit.d/unicorn.conf':
     owner => 'root',
     group => 'root',
     mode => '0644',
-    content => template('unicorn.conf'),
+    content => template('monit/unicorn.conf'),
   }
 }
