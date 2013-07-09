@@ -6,7 +6,7 @@ class db::setup_mysql {
   }
 
   exec { 'mysql-create-database':
-    path => '/usr/bin'
+    path => '/usr/bin',
     command => 'mysql -u root -e "CREATE DATABASE sample_app_production"',
     unless => 'mysql -u root -e "show databases" | grep sample_app_production',
   }
