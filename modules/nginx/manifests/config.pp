@@ -4,6 +4,4 @@ class nginx::config {
     group => 'root',
     mode => '0644',
     content => template('nginx/nginx.conf'),
-    require => Package['nginx'],
-    notify => Service['nginx'],
 }

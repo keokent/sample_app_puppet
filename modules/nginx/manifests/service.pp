@@ -3,6 +3,5 @@ class nginx::service {
     enable => true,
     ensure => running,
     hasrestart => true,
-    require =>Package['nginx'],
   }
 }

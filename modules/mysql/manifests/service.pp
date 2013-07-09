@@ -3,6 +3,5 @@ class mysql::service {
     enable => true,
     ensure => running,
     hasrestart => true,
-#    require => Package['mysql-server'],
   }
 }
