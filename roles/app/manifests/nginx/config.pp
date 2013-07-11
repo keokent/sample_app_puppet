@@ -3,6 +3,6 @@ class nginx::config {
     owner => 'root',
     group => 'root',
     mode => '0644',
-    content => template('nginx/nginx.conf'),
+    content => template('app/nginx/nginx.conf'),
   }
 }
