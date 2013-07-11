@@ -9,7 +9,7 @@ class app {
 
      Class['app::user']
   -> Class['::nginx::install']
-  -> Class['app::nginx::config]
+  -> Class['app::nginx::config']
   ~> Class['::nginx::service']
   -> Class['::rbenv']
   -> Class['app::unicorn']

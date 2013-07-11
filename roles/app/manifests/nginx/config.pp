@@ -1,4 +1,4 @@
-class nginx::config {
+class app::nginx::config {
   file { '/etc/nginx/nginx.conf':
     owner => 'root',
     group => 'root',
