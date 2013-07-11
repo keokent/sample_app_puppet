@@ -5,7 +5,7 @@ class app {
   include ::memcached
   include app::user
   include app::unicorn
-  include app::nginx:config
+  include app::nginx::config
 
      Class['app::user']
   -> Class['::nginx::install']
