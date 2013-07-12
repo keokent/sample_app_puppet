@@ -3,6 +3,6 @@ class db::config_mysql {
     owner => 'root',
     group => 'root',
     mode => '0644',
-    content => template('db/my.cnf'),
+    content => template['db/my.cnf'],
   }
 }
