@@ -14,7 +14,7 @@ describe user('appuser') do
   it { should have_home_directory '/home/appuser' }
 end
 
-describe file('/home/appuser/sample_app/tmp/sockets/.unicorn.sock') do
+describe file('/home/appuser/rails/shared/run/.unicorn.sock') do
   it { should be_socket }
 end
 

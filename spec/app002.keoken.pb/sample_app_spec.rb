@@ -16,7 +16,7 @@ describe file('/home/appuser') do
   it { should be_mode 755 }
 end
 
-describe file('/home/appuser/sample_app/tmp/sockets/.unicorn.sock') do
+describe file('/home/appuser/rails/shared/run/.unicorn.sock') do
   it { should be_socket }
 end
 
@@ -35,8 +35,8 @@ end
 
 describe file('/etc/nginx/nginx.conf') do
   it { should contain 'user nginx nginx;' }
-  it { should contain 'server unix:/home/appuser/sample_app/tmp/sockets/.unicorn.sock fail_timeout=0;' }
-  it { should contain('root /home/appuser/sample_app/public;').from(/^\s+server {/).to(/^\s+location @app/) }
+  it { should contain 'server unix:/home/appuser/rails/shared/run/.unicorn.sock fail_timeout=0;' }
+  it { should contain('root /home/appuser/rails/current/public;').from(/^\s+server {/).to(/^\s+location @app/) }
 end
 
 describe package('mysql-server') do
@@ -63,4 +63,3 @@ end
 describe port(11211) do
   it { should be_listening }
 end
-
